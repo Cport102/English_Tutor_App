@@ -309,7 +309,7 @@ Main modules/functions:
       t.done = true;
       if (t.score === questions.length && !t.congratsShown) {
         t.congratsShown = true;
-        showRosePopup("Happy Valentines Day Neha Bannerjee");
+        showRosePopup("Happy Valentines Day Neha Banerjee");
       }
       el.app.innerHTML = `
         <section class="card">
@@ -944,6 +944,7 @@ Main modules/functions:
   function score(v) { const n = Number(v); if (Number.isNaN(n)) return null; return Math.max(1, Math.min(5, Math.round(n))); }
   function esc(v) { return String(v).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;"); }
 })();
+
 
 
 
