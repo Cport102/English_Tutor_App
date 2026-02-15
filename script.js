@@ -163,6 +163,52 @@ Main modules/functions:
   function crumb(parts) { el.bc.innerHTML = parts.map((p, i) => `<span>${i ? " / " : ""}${esc(p)}</span>`).join(""); }
   function applyTheme() { document.documentElement.setAttribute("data-theme", S.db.darkMode ? "dark" : "light"); el.themeBtn.textContent = S.db.darkMode ? "Light mode" : "Dark mode"; }
   function toast(msg, t = 2200) { const d = document.createElement("div"); d.className = "toast"; d.textContent = msg; el.toast.appendChild(d); setTimeout(() => d.remove(), t); }
+  function showRosePopup(message) {
+    const overlay = document.createElement("div");
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.style.position = "fixed";
+    overlay.style.inset = "0";
+    overlay.style.background = "rgba(0,0,0,0.45)";
+    overlay.style.display = "grid";
+    overlay.style.placeItems = "center";
+    overlay.style.zIndex = "9999";
+
+    const card = document.createElement("div");
+    card.style.background = "var(--panel)";
+    card.style.color = "var(--text)";
+    card.style.border = "1px solid var(--border)";
+    card.style.borderRadius = "14px";
+    card.style.padding = "18px";
+    card.style.minWidth = "280px";
+    card.style.textAlign = "center";
+    card.style.boxShadow = "0 12px 24px rgba(0,0,0,0.25)";
+
+    const rose = document.createElement("div");
+    rose.textContent = "🌹";
+    rose.style.fontSize = "3rem";
+    rose.style.marginBottom = "8px";
+
+    const text = document.createElement("p");
+    text.textContent = message;
+    text.style.margin = "0 0 12px 0";
+    text.style.fontWeight = "700";
+
+    const closeBtn = document.createElement("button");
+    closeBtn.className = "btn";
+    closeBtn.type = "button";
+    closeBtn.textContent = "Close";
+    closeBtn.addEventListener("click", () => overlay.remove());
+
+    card.appendChild(rose);
+    card.appendChild(text);
+    card.appendChild(closeBtn);
+    overlay.appendChild(card);
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) overlay.remove();
+    });
+    document.body.appendChild(overlay);
+  }
 
   function landing() {
     crumb(["Home"]);
@@ -263,7 +309,7 @@ Main modules/functions:
       t.done = true;
       if (t.score === questions.length && !t.congratsShown) {
         t.congratsShown = true;
-        window.alert("you have now met the minimum bar to be a megafund private equity investor underwriting mid-teens IRR LBOs");
+        showRosePopup("Happy Valentines Day Neha Bannerjee");
       }
       el.app.innerHTML = `
         <section class="card">
@@ -898,5 +944,7 @@ Main modules/functions:
   function score(v) { const n = Number(v); if (Number.isNaN(n)) return null; return Math.max(1, Math.min(5, Math.round(n))); }
   function esc(v) { return String(v).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;"); }
 })();
+
+
 
 
